@@ -1,0 +1,118 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>Selenium Test Example Page</title>
+</head>
+
+<body style="margin: 20px" onload="checkParams()">
+	<h2>Selenium Test Example Page</h2>
+
+	<p id="intro">
+		A very basic example page for running remote Selenium Tests on the CrossBrowserTesting.com platform. 
+	</p>
+
+	<hr>
+	<p>Unordered List</p>
+	<div id="list-test">
+		<ul class="list">
+			<li>One</li>
+			<li>Two</li>
+			<li>Three</li>
+			<li>Four</li>
+		</ul>
+	</div>
+
+	<hr>
+	<p>Links and buttons</p>
+	<div id="link-test">
+		<a href="selenium_example_page2.html">Go To Page 2</a><br>
+		<a href="#scroll-anchor">Scroll To Anchor</a><br>
+		<button type="button" onclick="showMessage()">Show Message</button>
+		<button type="button" onclick="hideMessage()">Hide Message</button>
+		<div id="button-message" style="display:none"> I am the message!! </div>
+	</div>
+
+	<hr>
+	<p>Form Elements</p>
+	<form id="myform">
+		<input type="text" name="text" value="" placeholder="Input Text Here"><br>
+		<input type="checkbox" name="checkbox"> Check It<br>
+		<select name="select">
+			<option value="option1">Option 1</option>
+			<option value="option2">Option 2</option>
+			<option value="option3">Option 3</option>
+			<option value="option4">Option 4</option>
+		</select><br>
+		<input type="radio" name="radio" value="radio1"> Radio 1<br>
+		<input type="radio" name="radio" value="radio2"> Radio 2<br>
+		<textarea name="textarea"></textarea><br>
+		<input type="submit" value="Submit">
+	</form>
+
+	<div id="form-results" style="display:none">
+		<hr>
+		<p>Form Results</p>
+	</div>
+
+	<hr>
+	<p>Table</p>
+	<table id="table" style="background-color:#ccc;border:1px solid #333">
+		<thead style="background-color:#ddd">
+			<tr><th>Column 1</th><th>Column 2</th><th>Column 3</th><th>Column 4</th></tr>
+		</thead>
+		<tbody>
+			<tr><td>Cell 1</td><td>Cell 2</td><td>Cell 3</td><td>Cell 4</td></tr>
+			<tr><td>Cell 5</td><td>Cell 6</td><td>Cell 7</td><td>Cell 8</td></tr>
+			<tr><td>Cell 9</td><td>Cell 10</td><td>Cell 11</td><td>Cell 12</td></tr>
+			<tr><td>Cell 13</td><td>Cell 14</td><td>Cell 15</td><td>Cell 16</td></tr>
+			<tr><td>Cell 17</td><td>Cell 18</td><td>Cell 19</td><td>Cell 20</td></tr>
+			<tr><td>Cell 21</td><td>Cell 22</td><td>Cell 23</td><td>Cell 24</td></tr>
+		</tbody>
+	</table>
+
+	<hr>
+
+	<p>Anchor</p>
+	<div id="anchor" style="margin-top:500px">
+		<a name="scroll-anchor"></a>
+		<p>Here we are at the bottom of the page</p>
+	</div>
+
+	<script type="text/javascript">
+
+		function showMessage(){
+			var message = document.getElementById("button-message");
+			message.style.display = '';
+		}
+
+		function hideMessage(){
+			var message = document.getElementById("button-message");
+			message.style.display = 'none';
+		}
+
+		function checkParams(){
+			if (location.search.length > 0){
+				var params = location.search.replace('?',''),
+					tokens = params.split('&'),
+					formresults = document.getElementById("form-results"),
+					newDiv = null;
+
+				formresults.style.display = '';
+
+				for (var i=0; i <= tokens.length; i++){
+					if (tokens[i]){
+						var params = tokens[i].split('=');
+						if (params.length == 2 && params[1].length > 0){
+							newDiv = document.createElement('div');
+							newDiv.innerHTML = '<span>' + params[0] + '</span> &nbsp; <span>' + decodeURIComponent((params[1]).replace(/\+/g, '%20')); + '</span>';
+							formresults.appendChild(newDiv);
+						}
+					}
+				}
+			}
+		}
+
+	</script>
+
+</body>
+</html>
