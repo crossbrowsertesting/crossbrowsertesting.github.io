@@ -9,8 +9,6 @@
 
 <style type="text/css">
 
-@import "bourbon";
-
 .well {
   font-size: 32px;
   
@@ -76,7 +74,7 @@ angular.module('todoApp', [])
 			<span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
 
 			[ <a href="" ng-click="todoList.archive()">archive</a> ]
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 				<li ng-repeat="todo in todoList.todos">
 					<input type="checkbox" ng-model="todo.done" name="{{todo.name}}">
 					<span class="done-{{todo.done}}">{{todo.text}}</span>
