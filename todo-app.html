@@ -34,11 +34,11 @@ angular.module('todoApp', [])
   .controller('TodoListController', function() {
     var todoList = this;
     todoList.todos = [
-      {text:'gather requirements for this "to do" app', done:false, name: 'todo-1'},
-      {text:'build the app in angular', done:false, name: 'todo-2'},
-      {text:'create selenium unit tests', done:false, name: 'todo-3'},
-      {text:'build internal selenium grid, buy devices, fund & setup a test lab - $$$', done:false, name: 'todo-4'},
-      {text:'hire 1 FTE to manage/maintain lab and browsers - even more $$$', done:false, name: 'todo-5'}];
+      {text:'Gather requirements for a "todo" app', done:false, name: 'todo-1'},
+      {text:'Build the app in AngularJs', done:false, name: 'todo-2'},
+      {text:'Create Selenium unit tests', done:false, name: 'todo-3'},
+      {text:'Build selenium grid, buy devices, and setup a test lab - $$$', done:false, name: 'todo-4'},
+      {text:'Hire an FTE to manage the lab - more $$$', done:false, name: 'todo-5'}];
  
     todoList.addTodo = function() {
       todoList.todos.push({text:todoList.todoText, done:false});
