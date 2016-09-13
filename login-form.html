@@ -1,72 +1,407 @@
 <!DOCTYPE>
-<html>
+<html ng-app="app">
 <head>
-<title>Todo App - CrossBrowserTesting.com</title>
+<title>Login Form - CrossBrowserTesting.com</title>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.js"></script>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-
-<script type="text/javascript">
-// angular.module('todoApp', [])
-//   .controller('TodoListController', function() {
-//     var todoList = this;
-//     todoList.todos = [
-//       {text:'Gather requirements for a "todo" app', done:false, name: 'todo-1'},
-//       {text:'Build the app in AngularJs', done:false, name: 'todo-2'},
-//       {text:'Create Selenium unit tests', done:false, name: 'todo-3'},
-//       {text:'Build selenium grid, buy devices, and setup a test lab - $$$', done:false, name: 'todo-4'},
-//       {text:'Hire an FTE to manage the lab - more $$$', done:false, name: 'todo-5'}];
- 
-//     todoList.addTodo = function() {
-//       todoList.todos.push({text:todoList.todoText, done:false});
-//       todoList.todoText = '';
-//     };
- 
-//     todoList.remaining = function() {
-//       var count = 0;
-//       angular.forEach(todoList.todos, function(todo) {
-//         count += todo.done ? 0 : 1;
-//       });
-//       return count;
-//     };
- 
-//     todoList.archive = function() {
-//       var oldTodos = todoList.todos;
-//       todoList.todos = [];
-//       angular.forEach(oldTodos, function(todo) {
-//         if (!todo.done) todoList.todos.push(todo);
-//       });
-//     };
-//   });
-
-</script>
 </head>
 
 <body>
 
-    <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputFile">File input</label>
-            <input type="file" id="exampleInputFile">
-            <p class="help-block">Example block-level help text here.</p>
-        </div>
-        <div class="checkbox">
-            <label>
-              <input type="checkbox"> Check me out
-            </label>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-sm-12">
+                <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+            
 
+                <div class="col-md-6 col-md-offset-3" ng-controller="LoginController as vm">
+                    
+                    <!-- Login form -->
+                    <form name="form" ng-submit="vm.login()" role="form" ng-hide="vm.loggedIn">
+                        <h2>Login</h2>
+                        <p><small><em>This is an example login form for Selenium tests.</em></small></p>
+                        <p><small>Use <strong>tester@crossbrowsertesting.com</strong> and <strong>test123</strong> for a successful login. Any other credentials will fail.</small></p>
+                        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+
+                    <!-- Processing progress bar-->
+                    <div class="progress" ng-show="vm.dataLoading" ng-cloak>
+                        <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only">Verifying Credentials</span>
+                        </div>
+                    </div>
+
+                    <div id="logged-in-message" ng-show="vm.loggedIn" ng-cloak>
+                        <h2>Welcome {{vm.username}}</h2>
+                        <p>You are now logged in!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        angular.module('app', ['ngCookies']).run(run);
+
+
+        run.$inject = ['$rootScope', '$location', '$cookieStore', '$http', 'UserService'];
+        function run($rootScope, $location, $cookieStore, $http, UserService) {
+            //set successful user
+            UserService.setUsers([{
+                username: 'tester@crossbrowsertesting.com',
+                password: 'test123'
+            }])
+            
+        }
+        angular.module('app').controller('LoginController', LoginController);
+
+        LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
+        function LoginController($location, AuthenticationService, FlashService) {
+            var vm = this;
+
+            vm.login = login;
+            vm.loggedIn = false;
+            vm.dataLoading = false;
+
+            (function initController() {
+                // reset login status
+                AuthenticationService.ClearCredentials();
+            })();
+
+            function login() {
+                vm.dataLoading = true;
+                FlashService.clearFlashMessage();
+                AuthenticationService.Login(vm.username, vm.password, function (response) {
+                    if (response.success) {
+                        AuthenticationService.SetCredentials(vm.username, vm.password);
+                        vm.loggedIn = true;
+                        vm.dataLoading = false;
+                    } else {
+                        FlashService.Error(response.message);
+                        vm.dataLoading = false;
+                    }
+                });
+            };
+        }
+
+        angular.module('app').factory('AuthenticationService', AuthenticationService);
+
+        AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
+        function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService) {
+            var service = {};
+
+            service.Login = Login;
+            service.SetCredentials = SetCredentials;
+            service.ClearCredentials = ClearCredentials;
+
+            return service;
+
+            function Login(username, password, callback) {
+                $timeout(function () {
+                    var response;
+                    UserService.GetByUsername(username)
+                        .then(function (user) {
+                            if (user !== null && user.password === password) {
+                                response = { success: true };
+                            } else {
+                                response = { success: false, message: 'Username or password is incorrect' };
+                            }
+                            callback(response);
+                        });
+                }, 1000);
+            }
+
+            function SetCredentials(username, password) {
+                var authdata = Base64.encode(username + ':' + password);
+
+                $rootScope.globals = {
+                    currentUser: {
+                        username: username,
+                        authdata: authdata
+                    }
+                };
+
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                $cookieStore.put('globals', $rootScope.globals);
+            }
+
+            function ClearCredentials() {
+                $rootScope.globals = {};
+                $cookieStore.remove('globals');
+                $http.defaults.headers.common.Authorization = 'Basic';
+            }
+        }
+
+        // Base64 encoding service used by AuthenticationService
+        var Base64 = {
+
+            keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+
+            encode: function (input) {
+                var output = "";
+                var chr1, chr2, chr3 = "";
+                var enc1, enc2, enc3, enc4 = "";
+                var i = 0;
+
+                do {
+                    chr1 = input.charCodeAt(i++);
+                    chr2 = input.charCodeAt(i++);
+                    chr3 = input.charCodeAt(i++);
+
+                    enc1 = chr1 >> 2;
+                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                    enc4 = chr3 & 63;
+
+                    if (isNaN(chr2)) {
+                        enc3 = enc4 = 64;
+                    } else if (isNaN(chr3)) {
+                        enc4 = 64;
+                    }
+
+                    output = output +
+                        this.keyStr.charAt(enc1) +
+                        this.keyStr.charAt(enc2) +
+                        this.keyStr.charAt(enc3) +
+                        this.keyStr.charAt(enc4);
+                    chr1 = chr2 = chr3 = "";
+                    enc1 = enc2 = enc3 = enc4 = "";
+                } while (i < input.length);
+
+                return output;
+            },
+
+            decode: function (input) {
+                var output = "";
+                var chr1, chr2, chr3 = "";
+                var enc1, enc2, enc3, enc4 = "";
+                var i = 0;
+
+                // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+                var base64test = /[^A-Za-z0-9\+\/\=]/g;
+                if (base64test.exec(input)) {
+                    window.alert("There were invalid base64 characters in the input text.\n" +
+                        "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
+                        "Expect errors in decoding.");
+                }
+                input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+                do {
+                    enc1 = this.keyStr.indexOf(input.charAt(i++));
+                    enc2 = this.keyStr.indexOf(input.charAt(i++));
+                    enc3 = this.keyStr.indexOf(input.charAt(i++));
+                    enc4 = this.keyStr.indexOf(input.charAt(i++));
+
+                    chr1 = (enc1 << 2) | (enc2 >> 4);
+                    chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                    chr3 = ((enc3 & 3) << 6) | enc4;
+
+                    output = output + String.fromCharCode(chr1);
+
+                    if (enc3 != 64) {
+                        output = output + String.fromCharCode(chr2);
+                    }
+                    if (enc4 != 64) {
+                        output = output + String.fromCharCode(chr3);
+                    }
+
+                    chr1 = chr2 = chr3 = "";
+                    enc1 = enc2 = enc3 = enc4 = "";
+
+                } while (i < input.length);
+
+                return output;
+            }
+        };
+
+        angular
+            .module('app')
+            .factory('FlashService', FlashService);
+
+        FlashService.$inject = ['$rootScope'];
+        function FlashService($rootScope) {
+            var service = {};
+
+            service.Success = Success;
+            service.Error = Error;
+            service.clearFlashMessage = clearFlashMessage;
+
+            initService();
+
+            return service;
+
+            function initService() {
+                $rootScope.$on('$locationChangeStart', function () {
+                    clearFlashMessage();
+                });
+
+                
+            }
+
+            function clearFlashMessage() {
+                var flash = $rootScope.flash;
+                if (flash) {
+                    if (!flash.keepAfterLocationChange) {
+                        delete $rootScope.flash;
+                    } else {
+                        // only keep for a single location change
+                        flash.keepAfterLocationChange = false;
+                    }
+                }
+            }
+
+            function Success(message, keepAfterLocationChange) {
+                $rootScope.flash = {
+                    message: message,
+                    type: 'success', 
+                    keepAfterLocationChange: keepAfterLocationChange
+                };
+            }
+
+            function Error(message, keepAfterLocationChange) {
+                $rootScope.flash = {
+                    message: message,
+                    type: 'error',
+                    keepAfterLocationChange: keepAfterLocationChange
+                };
+            }
+        }
+
+         angular
+            .module('app')
+            .factory('UserService', UserService);
+
+        UserService.$inject = ['$timeout', '$filter', '$q'];
+        function UserService($timeout, $filter, $q) {
+
+            var service = {};
+
+            service.GetAll = GetAll;
+            service.GetById = GetById;
+            service.GetByUsername = GetByUsername;
+            service.Create = Create;
+            service.Update = Update;
+            service.Delete = Delete;
+            service.setUsers = setUsers;
+
+            return service;
+
+            function GetAll() {
+                var deferred = $q.defer();
+                deferred.resolve(getUsers());
+                return deferred.promise;
+            }
+
+            function GetById(id) {
+                var deferred = $q.defer();
+                var filtered = $filter('filter')(getUsers(), { id: id });
+                var user = filtered.length ? filtered[0] : null;
+                deferred.resolve(user);
+                return deferred.promise;
+            }
+
+            function GetByUsername(username) {
+                var deferred = $q.defer();
+                var filtered = $filter('filter')(getUsers(), { username: username });
+                var user = filtered.length ? filtered[0] : null;
+                deferred.resolve(user);
+                return deferred.promise;
+            }
+
+            function Create(user) {
+                var deferred = $q.defer();
+
+                // simulate api call with $timeout
+                $timeout(function () {
+                    GetByUsername(user.username)
+                        .then(function (duplicateUser) {
+                            if (duplicateUser !== null) {
+                                deferred.resolve({ success: false, message: 'Username "' + user.username + '" is already taken' });
+                            } else {
+                                var users = getUsers();
+
+                                // assign id
+                                var lastUser = users[users.length - 1] || { id: 0 };
+                                user.id = lastUser.id + 1;
+
+                                // save to local storage
+                                users.push(user);
+                                setUsers(users);
+
+                                deferred.resolve({ success: true });
+                            }
+                        });
+                }, 1000);
+
+                return deferred.promise;
+            }
+
+            function Update(user) {
+                var deferred = $q.defer();
+
+                var users = getUsers();
+                for (var i = 0; i < users.length; i++) {
+                    if (users[i].id === user.id) {
+                        users[i] = user;
+                        break;
+                    }
+                }
+                setUsers(users);
+                deferred.resolve();
+
+                return deferred.promise;
+            }
+
+            function Delete(id) {
+                var deferred = $q.defer();
+
+                var users = getUsers();
+                for (var i = 0; i < users.length; i++) {
+                    var user = users[i];
+                    if (user.id === id) {
+                        users.splice(i, 1);
+                        break;
+                    }
+                }
+                setUsers(users);
+                deferred.resolve();
+
+                return deferred.promise;
+            }
+
+            // private functions
+
+            function getUsers() {
+                if(!localStorage.users){
+                    localStorage.users = JSON.stringify([]);
+                }
+
+                return JSON.parse(localStorage.users);
+            }
+
+            function setUsers(users) {
+                localStorage.users = JSON.stringify(users);
+            }
+        }
+
+    </script>
 
 </body>
 </html>
