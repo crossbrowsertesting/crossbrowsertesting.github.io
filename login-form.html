@@ -1,0 +1,72 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>Todo App - CrossBrowserTesting.com</title>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+<script type="text/javascript">
+// angular.module('todoApp', [])
+//   .controller('TodoListController', function() {
+//     var todoList = this;
+//     todoList.todos = [
+//       {text:'Gather requirements for a "todo" app', done:false, name: 'todo-1'},
+//       {text:'Build the app in AngularJs', done:false, name: 'todo-2'},
+//       {text:'Create Selenium unit tests', done:false, name: 'todo-3'},
+//       {text:'Build selenium grid, buy devices, and setup a test lab - $$$', done:false, name: 'todo-4'},
+//       {text:'Hire an FTE to manage the lab - more $$$', done:false, name: 'todo-5'}];
+ 
+//     todoList.addTodo = function() {
+//       todoList.todos.push({text:todoList.todoText, done:false});
+//       todoList.todoText = '';
+//     };
+ 
+//     todoList.remaining = function() {
+//       var count = 0;
+//       angular.forEach(todoList.todos, function(todo) {
+//         count += todo.done ? 0 : 1;
+//       });
+//       return count;
+//     };
+ 
+//     todoList.archive = function() {
+//       var oldTodos = todoList.todos;
+//       todoList.todos = [];
+//       angular.forEach(oldTodos, function(todo) {
+//         if (!todo.done) todoList.todos.push(todo);
+//       });
+//     };
+//   });
+
+</script>
+</head>
+
+<body>
+
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="checkbox">
+            <label>
+              <input type="checkbox"> Check me out
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+
+</body>
+</html>
