@@ -8,54 +8,56 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 
-<body style="margin: 20px" onload="checkParams()">
-	<h2>Selenium Test Example Page</h2>
+<body onload="checkParams()">
 
-	<p id="intro">
-		A very basic example page for running remote Selenium Tests on the CrossBrowserTesting.com platform. 
-	</p>
+	<div class="container">
+		<h2>Selenium Test Example Page</h2>
 
-	<hr>
-	<p>Unordered List</p>
-	<div id="list-test">
-		<ul class="list">
-			<li>One</li>
-			<li>Two</li>
-			<li>Three</li>
-			<li>Four</li>
-		</ul>
-	</div>
+		<p id="intro">
+			A very basic example page for running remote Selenium Tests on the CrossBrowserTesting.com platform. 
+		</p>
 
-	<hr>
-	<p>Links and buttons</p>
-	<div id="link-test">
-		<a href="selenium_example_page2.html">Go To Page 2</a><br><br>
-		<button type="button" id="btn" onclick="showMessage()">Show Message</button>
-		<div id="button-message" style="display:none"> I am the message!! </div>
-	</div>
-
-	<hr>
-	<p>Form Elements</p>
-	<form id="myform">
-		<input type="text" name="text" value="" placeholder="Input Text Here"><br>
-		<input type="checkbox" name="checkbox"> Check It<br>
-		<select name="select">
-			<option value="option1">Option 1</option>
-			<option value="option2">Option 2</option>
-			<option value="option3">Option 3</option>
-			<option value="option4">Option 4</option>
-		</select><br>
-		<input type="radio" name="radio" value="radio1"> Radio 1<br>
-		<input type="radio" name="radio" value="radio2"> Radio 2<br>
-		<textarea name="textarea"></textarea><br>
-		<input type="submit" value="Submit">
-	</form>
-
-	<div id="form-results" style="display:none">
 		<hr>
-		<p>Form Results</p>
-	</div>
+		<p>Unordered List</p>
+		<div id="list-test">
+			<ul class="list">
+				<li>One</li>
+				<li>Two</li>
+				<li>Three</li>
+				<li>Four</li>
+			</ul>
+		</div>
 
+		<hr>
+		<p>Links and buttons</p>
+		<div id="link-test">
+			<a href="selenium_example_page2.html">Go To Page 2</a><br><br>
+			<button type="button" id="btn" onclick="showMessage()">Show Message</button>
+			<div id="button-message" style="display:none"> I am the message!! </div>
+		</div>
+
+		<hr>
+		<p>Form Elements</p>
+		<form id="myform">
+			<input type="text" name="text" value="" placeholder="Input Text Here"><br>
+			<input type="checkbox" name="checkbox"> Check It<br>
+			<select name="select">
+				<option value="option1">Option 1</option>
+				<option value="option2">Option 2</option>
+				<option value="option3">Option 3</option>
+				<option value="option4">Option 4</option>
+			</select><br>
+			<input type="radio" name="radio" value="radio1"> Radio 1<br>
+			<input type="radio" name="radio" value="radio2"> Radio 2<br>
+			<textarea name="textarea"></textarea><br>
+			<input type="submit" value="Submit">
+		</form>
+
+		<div id="form-results" style="display:none">
+			<hr>
+			<p>Form Results</p>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 
