@@ -23,7 +23,7 @@
                 <div class="col-md-6 col-md-offset-3" ng-controller="LoginController as vm">
                     
                     <!-- Login form -->
-                    <form name="login-form" ng-submit="vm.login()" role="form" ng-hide="vm.loggedIn">
+                    <form name="login-form" ng-submit="vm.login()" role="form" ng-if="!vm.loggedIn">
                         <h2>Login</h2>
                         <p><small><em>This is an example login form for Selenium tests.</em></small></p>
                         <p><small>Use <strong>tester@crossbrowsertesting.com</strong> and <strong>test123</strong> for a successful login. Any other credentials will fail.</small></p>
@@ -43,13 +43,13 @@
                     </form>
 
                     <!-- Processing progress bar-->
-                    <div class="progress" ng-show="vm.dataLoading" ng-cloak>
+                    <div class="progress" ng-show="vm.dataLoading" style="margin-top:20px" ng-cloak>
                         <div class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <span class="sr-only">Verifying Credentials</span>
+                        <span>Verifying Credentials</span>
                         </div>
                     </div>
 
-                    <div id="logged-in-message" ng-show="vm.loggedIn" ng-cloak>
+                    <div id="logged-in-message" ng-if="vm.loggedIn" ng-cloak>
                         <h2>Welcome {{vm.username}}</h2>
                         <p>You are now logged in!</p>
                     </div>
@@ -127,7 +127,7 @@
                             }
                             callback(response);
                         });
-                }, 1000);
+                }, 2000);
             }
 
             function SetCredentials(username, password) {
