@@ -53,6 +53,12 @@
 			<input type="submit" id="submitbtn" value="Submit">
 		</form>
 
+		<div>
+			<h2>Exiting before submit</h2>
+			<button onclick="myFunction()">Exit</button>
+		</div>
+
+
 		<div id="form-results" style="display:none">
 			<hr>
 			<p>Form Results</p>
@@ -64,6 +70,11 @@
 		function showMessage(){
 			var message = document.getElementById("button-message");
 			message.style.display = '';
+		}
+
+		function myFunction() {
+
+			    alert("Are you sure");
 		}
 
 		function checkParams(){
