@@ -55,14 +55,21 @@
 
 		<div>
 			<h2>Exiting before submit</h2>
-			<button onclick="myFunction()">Exit</button>
+			<button onclick="alert()">Exit</button>
 		</div>
-
 
 		<div id="form-results" style="display:none">
 			<hr>
 			<p>Form Results</p>
 		</div>
+
+
+		<div id="pop-up-page">
+			<h4>Search in Google</h4>
+			<button onclick="popup()">Exit</button>
+			<button id = "closepopup" onclick="closeWin()">Close</button>
+		</div>
+
 	</div>
 
 	<script type="text/javascript">
@@ -72,9 +79,18 @@
 			message.style.display = '';
 		}
 
-		function myFunction() {
-
+		function alert() {
 			    alert("Are you sure");
+		}
+
+		function popup() {
+			    
+    		var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+    		myWindow.document.write("<h4>This is inside the popup window</h4>");		
+		}
+
+		function closeWin() {
+		    myWindow.close();
 		}
 
 		function checkParams(){
