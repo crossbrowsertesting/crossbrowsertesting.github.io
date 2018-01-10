@@ -1,0 +1,53 @@
+<html>
+<script src='./jquery.min.js'></script>
+<body>
+	<input type='button' id='plz' value='owowplztoclick' onclick=itsAFunction();>
+	<div id='result'></div>
+	<script>
+		var getQueryStringParams = function(sParam){
+			var sPageURL = window.location.search.substring('=');
+			var sURLVariables = sPageURL.split('&');
+			for(var i = 0; i<sURLVariables.length; i++){
+				var sParameterName = sURLVariables[i].split('=');
+				if(sParameterName[0].replace('?','')==sParam){
+					return sParameterName[1];
+				}
+			}
+		}
+		var type = getQueryStringParams('type');
+		var test = getQueryStringParams('test');
+		var sessionId = getQueryStringParams('sessionId');
+		var tunnelId = getQueryStringParams('tunnelId');
+		var itsAFunction = function(){
+				console.log('owowimclicked');
+				var start = Date.now();
+				for(var i = 0; i<50; i++){
+					$.ajax(
+						{
+							url: 'http://p-p.me/warner/bigasstextfile.txt?number='+i,
+							success: function(result){
+								console.log('loaded bigass text file');
+							},
+							async:false
+						}
+					)
+				}
+				var stop = Date.now();
+				var duration = stop-start;
+				console.log('Test lasted '+duration+' ms');
+				$('#result').html(duration+' ms');
+				if(test!=='true'){
+					$.ajax(
+						{
+							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId,
+							success: function(result){
+								console.log('recorded time');
+							},
+							async:false
+						}
+					)
+				}
+		};
+	</script>
+</body>
+</html>
