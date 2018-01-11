@@ -24,7 +24,7 @@
 				for(var i = 0; i<50; i++){
 					$.ajax(
 						{
-							url: 'https://crossbrowsertesting.github.io/tunnel_time/bigasstextfile.txt?number='+i,
+							url: 'http://crossbrowsertesting.github.io/tunnel_time/bigasstextfile.txt?number='+i,
 							success: function(result){
 								console.log('loaded bigass text file');
 							},
@@ -39,7 +39,7 @@
 				if(test!=='true'){
 					$.ajax(
 						{
-							url: 'https://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId,
+							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId,
 							success: function(result){
 								console.log('recorded time');
 							},
