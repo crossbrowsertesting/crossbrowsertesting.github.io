@@ -1,7 +1,15 @@
+<!DOCTYPE html>
 <html>
-<script src='./jquery.min.js'></script>
+<head>
+<title>Test</title>
+<meta charset="UTF-8">
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<![endif]-->
+<script src='jquery.min.js'></script>
+</head>
 <body>
-	<input type='button' id='plz' value='owowplztoclick' onclick=itsAFunction();>
+	<button type="button" id='plz' onclick=itsAFunction();>owowplztoclick</button>
 	<div id='result'></div>
 	<script>
 		var getQueryStringParams = function(sParam){
@@ -21,7 +29,7 @@
 		var itsAFunction = function(){
 				console.log('owowimclicked');
 				var start = Date.now();
-				for(var i = 0; i<50; i++){
+				for(var i = 0; i<10; i++){
 					$.ajax(
 						{
 							url: 'http://crossbrowsertesting.github.io/tunnel_time/bigasstextfile.txt?number='+i,
