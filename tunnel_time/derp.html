@@ -26,6 +26,10 @@
 		var test = getQueryStringParams('test');
 		var sessionId = getQueryStringParams('sessionId');
 		var tunnelId = getQueryStringParams('tunnelId');
+		var serverImageId = getQueryStringParams('serverImageId');
+		var serverId = getQueryStringParams('serverId');
+		console.log(serverImageId);
+		console.log(serverId);
 		var itsAFunction = function(){
 				console.log('owowimclicked');
 				var start = Date.now();
@@ -47,7 +51,7 @@
 				if(test!=='true'){
 					$.ajax(
 						{
-							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId,
+							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId+'&serverImageId='+serverImageId+'&serverId='+serverId,
 							success: function(result){
 								console.log('recorded time');
 							},
