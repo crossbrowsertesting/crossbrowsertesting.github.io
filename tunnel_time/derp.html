@@ -52,6 +52,7 @@
 				if(test!=='true'){
 					$.ajax(
 						{
+							console.log('Making Ajax call');
 							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId+'&browsers='+browsers+'&os='+os,
 							success: function(result){
 								console.log('recorded time');
