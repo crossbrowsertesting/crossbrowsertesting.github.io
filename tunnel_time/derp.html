@@ -48,6 +48,7 @@
 				var duration = stop-start;
 				console.log('Test lasted '+duration+' ms');
 				$('#result').html(duration+' ms');
+				console.log('about to do ajax call');
 				if(test!=='true'){
 					$.ajax(
 						{
