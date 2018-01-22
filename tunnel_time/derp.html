@@ -52,7 +52,7 @@
 				if(test!=='true'){
 					$.ajax(
 						{
-							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&tunnelId='+tunnelId+'&browsers='+browsers+'&os='+os,
+							url: 'http://crossbrowsertesting.com/code/recordTunnelTime.php?duration='+duration+'&type='+type+'&sessionId='+sessionId+'&browsers='+browsers+'&os='+os+'&tunnelId='+tunnelId,
 							success: function(result){
 								console.log('recorded time');
 								console.log(result);
