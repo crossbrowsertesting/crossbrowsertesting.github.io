@@ -9,7 +9,7 @@
 <script src='jquery.min.js'></script>
 </head>
 <body>
-	<button type="button" id='plz' onclick=itsAFunction();>owowplztoclick</button>
+	<button type="button" id='plz' onclick=itsAFunction();>Click Me!</button>
 	<div id='result'></div>
 	<script>
 		var getQueryStringParams = function(sParam){
@@ -36,9 +36,9 @@
 				for(var i = 0; i<10; i++){
 					$.ajax(
 						{
-							url: 'http://crossbrowsertesting.github.io/tunnel_time/bigasstextfile.txt?number='+i,
+							url: 'http://crossbrowsertesting.github.io/tunnel_time/largetextfile.txt?number='+i,
 							success: function(result){
-								console.log('loaded bigass text file');
+								console.log('loaded large text file');
 							},
 							async:false
 						}
