@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Geolocation Test - CrossBrowserTesting.com</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+
+<style type="text/css">
+
+.well {
+  font-size: 32px;
+  
+}
+</style>
+
+
+<script type="text/javascript">
+  $( function() {
+
+
+
+    Geolocation.getCurrentPosition(
+      position=>{
+        console.log('position is', position)
+        const latitude  = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        $('.well').html(`Latitude: ${latitude} °, Longitude: ${longitude} °`)
+      },
+      error=>{
+        console.log('error')
+      }
+    );
+  });
+
+</script>
+</head>
+
+<body>
+
+	<div>
+  	<div class="container">
+  		<h2>Geolocation Test</h2>
+      <p>This page will request a user's geolocation and acts as a test of Selenium 
+        against such pages. </p>
+  		<div class="well" >
+  			Results shown here if accepted.
+  		</div>
+  	</div>
+  </div>
+
+
+</body>
+</html>
