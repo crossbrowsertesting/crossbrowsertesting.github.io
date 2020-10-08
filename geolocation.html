@@ -33,6 +33,10 @@
          $('.well').html(error.message);
       }
     );
+
+    $('#click-test button').bind('click',()=>{
+      $('#click-test span').text('Button was clicked!')
+    })
   });
 
 </script>
@@ -48,6 +52,10 @@
   		<div class="well" >
   			Results shown here if accepted.
   		</div>
+      <div id="click-test">
+        <button class="btn">Click me</button>
+        <span></span>
+      </div>
   	</div>
   </div>
 
