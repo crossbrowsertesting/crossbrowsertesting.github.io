@@ -23,7 +23,7 @@
 
 
 
-    Geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
       position=>{
         console.log('position is', position)
         const latitude  = position.coords.latitude;
