@@ -26,10 +26,11 @@
         console.log('position is', position)
         const latitude  = position.coords.latitude;
         const longitude = position.coords.longitude;
-        $('.well').html(`Latitude: ${latitude} °, Longitude: ${longitude} °`)
+        $('.well').html(`Latitude: ${latitude} °, Longitude: ${longitude} °`);
       },
       error=>{
         console.log('error:', error)
+         $('.well').html(error.message);
       }
     );
   });
